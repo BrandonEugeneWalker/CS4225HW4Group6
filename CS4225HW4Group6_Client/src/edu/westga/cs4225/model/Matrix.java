@@ -57,6 +57,14 @@ public class Matrix implements Serializable {
 		this.matrixValues = new int[rows][columns];
 	}
 	
+	
+	/**
+	 * Creates a new instance of a Matrix class
+	 */
+	public Matrix(int[][] matrix) {
+		this.matrixValues = matrix;
+	}
+	
 	/**
 	 * Sets the value of the m row k column cell.
 	 * 
@@ -102,5 +110,47 @@ public class Matrix implements Serializable {
 	public Matrix multiplyMatrix(Matrix matrixB) {
 		return null;
 	}
+	
+	/**
+	 * 
+	 * @param firstMatrix
+	 * @param secondMatrix
+	 * @param r1
+	 * @param c1
+	 * @param c2
+	 * @return
+	 */
+    public int[][] multiplyMatrices(int[][] secondMatrix, int r1, int c1, int c2) {
+        int[][] product = new int[r1][c2];
+        for(int i = 0; i < r1; i++) {
+            for (int j = 0; j < c2; j++) {
+                for (int k = 0; k < c1; k++) {
+                    product[i][j] += this.matrixValues[i][k] * secondMatrix[k][j];
+                }
+            }
+        }
+
+        return product;
+    }
+    
+    
+    
+    
+    
+    /**
+     * Displays the product entered
+     * 
+     * @param product
+     */
+    public void displayProduct(int[][] product) {
+        System.out.println("Product of two matrices is: ");
+        for(int[] row : product) {
+            for (int column : row) {
+                System.out.print(column + "    ");
+            }
+            System.out.println();
+        }
+    }
+	
 
 }
