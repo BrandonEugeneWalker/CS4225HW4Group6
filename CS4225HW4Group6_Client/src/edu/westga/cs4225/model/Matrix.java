@@ -13,6 +13,14 @@ import java.io.Serializable;
  */
 public class Matrix implements Serializable {
 
+	private static final String THE_COLUMN_TO_SET_CANNOT_BE_GREATER_THAN_THE_COLUMN_SIZE = "The column to set cannot be greater than the column size.";
+
+	private static final String THE_ROW_TO_SET_CANNOT_BE_GREATER_THAN_THE_ROW_SIZE = "The row to set cannot be greater than the row size.";
+
+	private static final String THE_COLUMN_TO_SET_CANNOT_BE_NEGATIVE = "The column to set cannot be negative.";
+
+	private static final String THE_ROW_TO_SET_CANNOT_BE_NEGATIVE = "The row to set cannot be negative.";
+
 	private static final long serialVersionUID = 1L;
 	
 	private char matrixName;
@@ -47,6 +55,52 @@ public class Matrix implements Serializable {
 		this.numberOfRows = rows;
 		this.numberOfColumns = columns;
 		this.matrixValues = new int[rows][columns];
+	}
+	
+	/**
+	 * Sets the value of the m row k column cell.
+	 * 
+	 * @precondition the row/column cannot be negative or greater than the size of the row/columns.
+	 * @postcondition the value is set
+	 * 
+	 * @param mRow the row to set the value for
+	 * @param kColumn the column to set the value for
+	 * @param value the value to set
+	 */
+	public void setMatrixCellValue(int mRow, int kColumn, int value) {
+		if (mRow < 0) {
+			throw new IllegalArgumentException(THE_ROW_TO_SET_CANNOT_BE_NEGATIVE);
+		}
+		if (kColumn < 0) {
+			throw new IllegalArgumentException(THE_COLUMN_TO_SET_CANNOT_BE_NEGATIVE);
+		}
+		if (mRow >= this.numberOfRows) {
+			throw new IllegalArgumentException(THE_ROW_TO_SET_CANNOT_BE_GREATER_THAN_THE_ROW_SIZE);
+		}
+		if (kColumn >= this.numberOfColumns) {
+			throw new IllegalArgumentException(THE_COLUMN_TO_SET_CANNOT_BE_GREATER_THAN_THE_COLUMN_SIZE);
+		}
+		this.matrixValues[mRow][kColumn] = value;
+	}
+	
+	public int getMatrixCellValue(int mRow, int kColumn) {
+		if (mRow < 0) {
+			throw new IllegalArgumentException(THE_ROW_TO_SET_CANNOT_BE_NEGATIVE);
+		}
+		if (kColumn < 0) {
+			throw new IllegalArgumentException(THE_COLUMN_TO_SET_CANNOT_BE_NEGATIVE);
+		}
+		if (mRow >= this.numberOfRows) {
+			throw new IllegalArgumentException(THE_ROW_TO_SET_CANNOT_BE_GREATER_THAN_THE_ROW_SIZE);
+		}
+		if (kColumn >= this.numberOfColumns) {
+			throw new IllegalArgumentException(THE_COLUMN_TO_SET_CANNOT_BE_GREATER_THAN_THE_COLUMN_SIZE);
+		}
+		return this.matrixValues[mRow][kColumn];
+	}
+	
+	public Matrix multiplyMatrix(Matrix matrixB) {
+		return null;
 	}
 
 }
