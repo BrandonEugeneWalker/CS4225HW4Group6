@@ -3,9 +3,9 @@ package edu.westga.cs4225.model;
 import java.io.Serializable;
 
 /**
- * The Matrix class is a representation of a 2 dimensional matrix of m rows and k columns.
- * The matrix class consists of the name of a matrix, its number of rows/columns, and its values.
- * Initially the values in a matrix are empty.
+ * The Matrix class is a representation of a 2 dimensional matrix of m rows and
+ * k columns. The matrix class consists of the name of a matrix, its number of
+ * rows/columns, and its values. Initially the values in a matrix are empty.
  * 
  * @author Brandon Walker, Kevin Flynn, Luke Whaley
  * @version February 26, 2020
@@ -22,23 +22,23 @@ public class Matrix implements Serializable {
 	private static final String THE_ROW_TO_SET_CANNOT_BE_NEGATIVE = "The row to set cannot be negative.";
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private char matrixName;
-	
+
 	private int numberOfRows;
-	
+
 	private int numberOfColumns;
-	
+
 	private int[][] matrixValues;
-	
+
 	/**
 	 * Creates a new instance of a Matrix class.
 	 * 
 	 * @precondition name must be A or B; rows and columns must be greater than zero
 	 * @postcondition a new Matrix is created
 	 * 
-	 * @param name the name of the matrix
-	 * @param rows the number of rows
+	 * @param name    the name of the matrix
+	 * @param rows    the number of rows
 	 * @param columns the number of columns
 	 */
 	public Matrix(char name, int rows, int columns) {
@@ -56,8 +56,25 @@ public class Matrix implements Serializable {
 		this.numberOfColumns = columns;
 		this.matrixValues = new int[rows][columns];
 	}
-	
-	
+
+	/**
+	 * Displays the matrix in a nice format.
+	 * 
+	 * @precondition none
+	 * @postcondition the matrix is displayed.
+	 */
+	public void display() {
+		for (int i = 0; i < this.numberOfRows; i++) {
+			for (int j = 0; j < this.numberOfColumns; j++) {
+				if (j < this.numberOfColumns - 1) {
+					System.out.print(this.matrixValues[i][j] + ",");
+				} else {
+					System.out.println(this.matrixValues[i][j]);
+				}
+			}
+		}
+	}
+
 	/**
 	 * Creates a new instance of a Matrix class
 	 * 
@@ -68,16 +85,17 @@ public class Matrix implements Serializable {
 		this.numberOfRows = matrix.length;
 		this.numberOfColumns = matrix[0].length;
 	}
-	
+
 	/**
 	 * Sets the value of the m row k column cell.
 	 * 
-	 * @precondition the row/column cannot be negative or greater than the size of the row/columns.
+	 * @precondition the row/column cannot be negative or greater than the size of
+	 *               the row/columns.
 	 * @postcondition the value is set
 	 * 
-	 * @param mRow the row to set the value for
+	 * @param mRow    the row to set the value for
 	 * @param kColumn the column to set the value for
-	 * @param value the value to set
+	 * @param value   the value to set
 	 */
 	public void setMatrixCellValue(int mRow, int kColumn, int value) {
 		if (mRow < 0) {
@@ -94,10 +112,11 @@ public class Matrix implements Serializable {
 		}
 		this.matrixValues[mRow][kColumn] = value;
 	}
-	
+
 	/**
 	 * Gets the value of the m row k column cell.
-	 * @param mRow the row number
+	 * 
+	 * @param mRow    the row number
 	 * @param kColumn the column number
 	 * @return the value in the matrix
 	 */
@@ -116,20 +135,31 @@ public class Matrix implements Serializable {
 		}
 		return this.matrixValues[mRow][kColumn];
 	}
-	
+
 	/**
 	 * Gets the number of rows in a matrix.
+	 * 
 	 * @return the number of matrix
 	 */
 	public int getNumberOfRows() {
 		return this.numberOfRows;
 	}
-	
+
 	/**
 	 * Gets the number of columns in the matrix.
+	 * 
 	 * @return the number of columns
 	 */
 	public int getNumberOfColumns() {
 		return this.numberOfColumns;
+	}
+
+	/**
+	 * Gets the matrix name.
+	 * 
+	 * @return the matrix name.
+	 */
+	public char getMatrixName() {
+		return this.matrixName;
 	}
 }
