@@ -28,6 +28,9 @@ public class MatrixDisplay {
 			for (int j = 0; j < inputMatrix.getNumberOfColumns(); j++) {
 				int results = inputMatrix.getMatrixCellValue(i, j);
 				outputBuilder.append(MatrixDisplay.paddingNumbers(results, maxLength));
+				if (j != inputMatrix.getNumberOfColumns() - 1) {
+					outputBuilder.append("  ");
+				}
 
 			}
 			outputBuilder.append("]" + System.lineSeparator());
@@ -51,7 +54,7 @@ public class MatrixDisplay {
 			for (int j = 0; j < inputMatrix.getNumberOfColumns(); j++) {
 				int results = inputMatrix.getMatrixCellValue(i, j);
 				outputBuilder.append(results);
-				if (j != inputMatrix.getNumberOfColumns()) {
+				if (j != inputMatrix.getNumberOfColumns() - 1) {
 					outputBuilder.append(", ");
 				}
 			}

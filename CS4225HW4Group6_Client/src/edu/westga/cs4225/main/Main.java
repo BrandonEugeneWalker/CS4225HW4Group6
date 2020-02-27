@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import edu.westga.cs4225.client.MatrixClient;
 import edu.westga.cs4225.model.Matrix;
+import edu.westga.cs4225.model.MatrixDisplay;
 
 public class Main {
 
@@ -18,11 +19,17 @@ public class Main {
         Matrix firstMatrixObject = new Matrix(firstMatrix);
         Matrix secondMatrixObject = new Matrix(secondMatrix);
         
+		
+		//Matrix matrixC = MatrixMath.multiply(testMatrix, testMatrix);
+        
         MatrixClient client = new MatrixClient(HOST, PORT);
         try {
 			System.out.println("Client Starting...");
         	Matrix productMatrix = client.start(firstMatrixObject, secondMatrixObject);
-			productMatrix.display();
+			String consoleDisplay = MatrixDisplay.buildMatrixConsoleFormat(productMatrix);
+			System.out.println(consoleDisplay);
+			String csvDisplay = MatrixDisplay.buildMatrixCsvFormat(productMatrix);
+			System.out.println(csvDisplay);
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
