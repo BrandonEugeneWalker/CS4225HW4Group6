@@ -42,7 +42,7 @@ public class Matrix implements Serializable {
 	 * @param columns the number of columns
 	 */
 	public Matrix(char name, int rows, int columns) {
-		if (name != 'A' || name != 'B' || name != 'C') {
+		if (name != 'A' && name != 'B' && name != 'C') {
 			throw new IllegalArgumentException("The name of a Matrix must be either A or B or C.");
 		}
 		if (rows <= 0) {
@@ -60,9 +60,13 @@ public class Matrix implements Serializable {
 	
 	/**
 	 * Creates a new instance of a Matrix class
+	 * 
+	 * @precondition matrix does not contains rows of 0 zero length.
 	 */
 	public Matrix(int[][] matrix) {
 		this.matrixValues = matrix;
+		this.numberOfRows = matrix.length;
+		this.numberOfColumns = matrix[0].length;
 	}
 	
 	/**

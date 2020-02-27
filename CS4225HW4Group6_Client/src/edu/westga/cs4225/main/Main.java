@@ -22,7 +22,7 @@ public class Main {
         try {
 			System.out.println("Client Starting...");
         	Matrix productMatrix = client.start(firstMatrixObject, secondMatrixObject);
-			System.out.println(productMatrix);
+			productMatrix.display();
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}

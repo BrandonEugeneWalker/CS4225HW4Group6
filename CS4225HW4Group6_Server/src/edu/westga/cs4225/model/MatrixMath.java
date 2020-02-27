@@ -26,10 +26,11 @@ public class MatrixMath {
     	}
     	
     	Matrix matrixC = new Matrix('C', matrixA.getNumberOfRows(), matrixB.getNumberOfColumns());
-    	for (int i = 0; i < matrixA.getNumberOfColumns(); i++) {
+    	for (int i = 0; i < matrixA.getNumberOfRows(); i++) {
     		for (int j = 0; j < matrixB.getNumberOfColumns(); j++) {
     			for (int k = 0; k < matrixA.getNumberOfColumns(); k++) {
     				int value = matrixA.getMatrixCellValue(i, k) * matrixB.getMatrixCellValue(k, j);
+    				value += matrixC.getMatrixCellValue(i, j);
     				matrixC.setMatrixCellValue(i, j, value);
     			}
     		}
