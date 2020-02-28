@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.time.Duration;
 
+import edu.westga.cs4225.model.CalculationResult;
 import edu.westga.cs4225.model.Matrix;
 
 /**
@@ -52,7 +54,7 @@ public class MatrixClient {
 	 * @throws ClassNotFoundException
 	 */
 	public Matrix start(Matrix firstMatrix, Matrix secondMatrix) throws IOException, ClassNotFoundException {
-		Matrix matricesProduct = null;
+		CalculationResult result = null;
 		this.client = new Socket(this.host, this.port);
 		try (ObjectOutputStream outgoing = new ObjectOutputStream(this.client.getOutputStream());
 				ObjectInputStream incoming = new ObjectInputStream(this.client.getInputStream())) {
@@ -61,18 +63,23 @@ public class MatrixClient {
 		} finally {
 			this.client.close();
 		}
-
+		
 		this.client = new Socket(this.host, this.port);
 		try (ObjectOutputStream outgoing = new ObjectOutputStream(this.client.getOutputStream());
 				ObjectInputStream incoming = new ObjectInputStream(this.client.getInputStream())) {
 			System.out.println("Sending Second Matrix.");
 			outgoing.writeObject(secondMatrix);
 
-			matricesProduct = (Matrix) incoming.readObject();
+			result = (CalculationResult) incoming.readObject();
+			
+			System.out.println("Response: ");
+			Duration duration = result.getDuration();
+			double seconds = duration.getNano() / 1.0e9;
+			System.out.println("The matrix multiplication took: " + seconds + "s.");
 		} finally {
 			this.client.close();
 		}
 
-		return matricesProduct;
+		return result.getMatrix();
 	}
 }

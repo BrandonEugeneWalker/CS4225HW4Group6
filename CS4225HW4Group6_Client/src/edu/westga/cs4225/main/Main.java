@@ -14,8 +14,8 @@ public class Main {
 	public static void main(String[] args) {
 		int r1 = 2, c1 = 3;
         int r2 = 3, c2 = 2;
-        int[][] firstMatrix = { {3, -2, 5}, {3, 0, 4} };
-        int[][] secondMatrix = { {2, 3}, {-9, 0}, {0, 4} };
+        int[][] firstMatrix = { {3, -2, 5, 2, 6}, {3, 0, 4, 3, -1}, {3, 0, 4, 3, -1}, {3, 0, 4, 3, -1}, {3, 0, 4, 3, -1}};
+        int[][] secondMatrix = { {3, 0, 9, 3, -1}, {3, 0, 4, 2, -1}, {-4, 0, 4, 3, -1}, {3, 0, 7, 3, -1}, {1, 0, 4, 3, -1} };
         Matrix firstMatrixObject = new Matrix(firstMatrix);
         Matrix secondMatrixObject = new Matrix(secondMatrix);
         

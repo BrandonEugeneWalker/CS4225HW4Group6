@@ -5,7 +5,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.LinkedList;
+import java.util.Queue;
 
+import edu.westga.cs4225.model.CalculationResult;
 import edu.westga.cs4225.model.Matrix;
 import edu.westga.cs4225.model.MatrixMath;
 
@@ -23,7 +28,7 @@ public class MatrixServer {
 
 	private int port;
 
-	private Matrix[] matrices;
+	private Queue<Matrix> matrices;
 
 	/**
 	 * Creates a new instance of a MatrixServer class.
@@ -40,7 +45,7 @@ public class MatrixServer {
 		this.server = null;
 		this.client = null;
 		this.port = port;
-		this.matrices = new Matrix[2];
+		this.matrices = new LinkedList<Matrix>();
 	}
 
 	/**
@@ -54,22 +59,40 @@ public class MatrixServer {
 	 */
 	public void start() throws IOException, ClassNotFoundException {
 		this.server = new ServerSocket(this.port);
-		int matricesIndex = 0;
-		while (matricesIndex < 2) {
+		while (true) {
 			this.client = this.server.accept();
 			try (ObjectInputStream incoming = new ObjectInputStream(this.client.getInputStream());
 					ObjectOutputStream outgoing = new ObjectOutputStream(this.client.getOutputStream())) {
-				this.matrices[matricesIndex] = (Matrix) incoming.readObject();
-				matricesIndex++;
+				this.matrices.add((Matrix) incoming.readObject());
 
-				if (matricesIndex == 2) {
-					Matrix matricesProduct = MatrixMath.multiply(this.matrices[0], this.matrices[1]);
-					outgoing.writeObject(matricesProduct);
+				if (this.matrices.size() == 2) {
+					Matrix firstMatrix = this.matrices.remove();
+					Matrix secondMatrix = this.matrices.remove();
+					
+					Instant start = Instant.now();
+					Matrix matricesProduct = MatrixMath.multiply(firstMatrix, secondMatrix);
+					Instant end = Instant.now();
+					
+					CalculationResult result = new CalculationResult(matricesProduct, Duration.between(start, end));
+					outgoing.writeObject(result);
 				}
 			} finally {
 				this.client.close();
 			}
 		}
-		this.server.close();
+	}
+	
+	/**
+	 * Closes this MatrixServer.
+	 * 
+	 * @precondition none
+	 * @postcondition the server is closed.
+	 */
+	public void close() {
+		try {
+			this.server.close();
+		} catch (IOException e) {
+			System.out.println("The server is already closed.");
+		}
 	}
 }
