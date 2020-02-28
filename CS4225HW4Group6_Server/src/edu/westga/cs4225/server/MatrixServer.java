@@ -1,18 +1,10 @@
 package edu.westga.cs4225.server;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.LinkedList;
-import java.util.Queue;
-
-import edu.westga.cs4225.model.CalculationResult;
-import edu.westga.cs4225.model.Matrix;
-import edu.westga.cs4225.model.MatrixMath;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * The MatrixServer class directs the flow of how the server handles and
@@ -23,12 +15,12 @@ import edu.westga.cs4225.model.MatrixMath;
  */
 public class MatrixServer {
 
+	private static final int NUMBER_OF_THREADS = 6;
+	
 	private ServerSocket server;
-	private Socket client;
-
 	private int port;
-
-	private Queue<Matrix> matrices;
+	
+	private ExecutorService pool;
 
 	/**
 	 * Creates a new instance of a MatrixServer class.
@@ -43,9 +35,8 @@ public class MatrixServer {
 		}
 
 		this.server = null;
-		this.client = null;
 		this.port = port;
-		this.matrices = new LinkedList<Matrix>();
+		this.pool = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 	}
 
 	/**
@@ -57,28 +48,11 @@ public class MatrixServer {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	public void start() throws IOException, ClassNotFoundException {
+	public void start() throws IOException {
 		this.server = new ServerSocket(this.port);
 		while (true) {
-			this.client = this.server.accept();
-			try (ObjectInputStream incoming = new ObjectInputStream(this.client.getInputStream());
-					ObjectOutputStream outgoing = new ObjectOutputStream(this.client.getOutputStream())) {
-				this.matrices.add((Matrix) incoming.readObject());
-
-				if (this.matrices.size() == 2) {
-					Matrix firstMatrix = this.matrices.remove();
-					Matrix secondMatrix = this.matrices.remove();
-					
-					Instant start = Instant.now();
-					Matrix matricesProduct = MatrixMath.multiply(firstMatrix, secondMatrix);
-					Instant end = Instant.now();
-					
-					CalculationResult result = new CalculationResult(matricesProduct, Duration.between(start, end));
-					outgoing.writeObject(result);
-				}
-			} finally {
-				this.client.close();
-			}
+			Socket client = this.server.accept();
+			this.pool.execute(new Response(client));
 		}
 	}
 	
@@ -91,6 +65,7 @@ public class MatrixServer {
 	public void close() {
 		try {
 			this.server.close();
+			this.pool.shutdown();
 		} catch (IOException e) {
 			System.out.println("The server is already closed.");
 		}

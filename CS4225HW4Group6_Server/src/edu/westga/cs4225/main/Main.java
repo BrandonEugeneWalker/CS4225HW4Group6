@@ -20,7 +20,7 @@ public class Main {
 		try {
 			System.out.println("Server Starting..");
 			server.start();
-		} catch (ClassNotFoundException | IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

@@ -8,6 +8,7 @@ import java.time.Duration;
 
 import edu.westga.cs4225.model.CalculationResult;
 import edu.westga.cs4225.model.Matrix;
+import edu.westga.cs4225.model.Operands;
 
 /**
  * The MatrixClient class handles the transmission of matrix data to the server
@@ -58,17 +59,9 @@ public class MatrixClient {
 		this.client = new Socket(this.host, this.port);
 		try (ObjectOutputStream outgoing = new ObjectOutputStream(this.client.getOutputStream());
 				ObjectInputStream incoming = new ObjectInputStream(this.client.getInputStream())) {
-			System.out.println("Sending First Matrix.");
-			outgoing.writeObject(firstMatrix);
-		} finally {
-			this.client.close();
-		}
-		
-		this.client = new Socket(this.host, this.port);
-		try (ObjectOutputStream outgoing = new ObjectOutputStream(this.client.getOutputStream());
-				ObjectInputStream incoming = new ObjectInputStream(this.client.getInputStream())) {
-			System.out.println("Sending Second Matrix.");
-			outgoing.writeObject(secondMatrix);
+			System.out.println("Sending Matrices..");
+			Operands operands = new Operands(firstMatrix, secondMatrix);
+			outgoing.writeObject(operands);
 
 			result = (CalculationResult) incoming.readObject();
 			
