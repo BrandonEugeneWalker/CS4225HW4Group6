@@ -48,19 +48,19 @@ public class MatrixClient {
 	 * Starts the client in order to transmit and receive data.
 	 * 
 	 * @precondition none
-	 * @param firstMatrix  the first matrix to send
-	 * @param secondMatrix the second matrix to send
+	 * 
+	 * @param operands the matrices to send.
+	 * 
 	 * @return the result of the matrix multiplication
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	public Matrix start(Matrix firstMatrix, Matrix secondMatrix) throws IOException, ClassNotFoundException {
+	public Matrix start(Operands operands) throws IOException, ClassNotFoundException {
 		CalculationResult result = null;
 		this.client = new Socket(this.host, this.port);
 		try (ObjectOutputStream outgoing = new ObjectOutputStream(this.client.getOutputStream());
 				ObjectInputStream incoming = new ObjectInputStream(this.client.getInputStream())) {
 			System.out.println("Sending Matrices..");
-			Operands operands = new Operands(firstMatrix, secondMatrix);
 			outgoing.writeObject(operands);
 
 			result = (CalculationResult) incoming.readObject();
