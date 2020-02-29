@@ -25,6 +25,8 @@ public class Main {
         MatrixClient client = new MatrixClient(HOST, PORT);
         try {
 			System.out.println("Client Starting...");
+			
+			
         	Matrix productMatrix = client.start(firstMatrixObject, secondMatrixObject);
 			String consoleDisplay = MatrixDisplay.buildMatrixConsoleFormat(productMatrix);
 			System.out.println(consoleDisplay);
