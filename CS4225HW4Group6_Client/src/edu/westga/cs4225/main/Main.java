@@ -30,8 +30,8 @@ public class Main {
 	 * @param args NOT_USED
 	 */
 	public static void main(String[] args) {
-		File inputFile = new File(args[0]);
-		File outputFile = new File(args[1]);
+		File inputFile = new File("TestFiles/test.txt");
+		File outputFile = new File("TestFiles/output.txt");
 		if (!inputFile.exists() || !inputFile.canRead()) {
 			System.err.println("Invalid Input File..");
 			System.exit(1);
@@ -41,15 +41,14 @@ public class Main {
 		} catch (IOException e1) {
 			System.err.println("The output file could not be created at: " + outputFile.getAbsolutePath());
 		}
-		MatrixFileReader reader = new MatrixFileReader();
-		Operands operands = reader.readFile(inputFile);
+		Operands operands = null;
+		operands = buildOperand(inputFile, operands);
 		MatrixClient client = new MatrixClient(HOST, PORT);
 		try {
 			System.out.println("Client Starting...");
 
 			Matrix productMatrix = client.start(operands);
 			String performanceStats = client.getResults();
-
 			System.out.println(performanceStats);
 			if (productMatrix.getNumberOfColumns() <= 30) {
 				String consoleDisplay = MatrixDisplay.buildMatrixConsoleFormat(productMatrix);
@@ -64,6 +63,16 @@ public class Main {
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private static Operands buildOperand(File inputFile, Operands operands) {
+		try {
+			MatrixFileReader reader = new MatrixFileReader();
+			operands = reader.readFile(inputFile);
+		} catch (Exception e) {
+			System.err.println("The input file has incorrect values");
+		}
+		return operands;
 	}
 
 }

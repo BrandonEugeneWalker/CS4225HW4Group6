@@ -29,7 +29,7 @@ public class MatrixFileReader {
 			throw new IllegalArgumentException("The file to read from cannot be null!");
 		}
 		ArrayList<Matrix> matrixCollection = new ArrayList<Matrix>();
-		String allLines = MatrixFileReader.readLineByLineJava8(file.getAbsolutePath());
+		String allLines = this.readLineByLineJava8(file.getAbsolutePath());
 		String[] matrixes = allLines.split("\n\n");
 		String firstLine = matrixes[0];
 		matrixes[0] = firstLine + "\n";
@@ -42,9 +42,9 @@ public class MatrixFileReader {
 			Matrix matrix = this.buildMatrix(matrixes[i]);
 			matrixCollection.add(matrix);
 		}		
-		return new Operands(matrixCollection.get(0), matrixCollection.get(1));
+		Operands operands = new Operands(matrixCollection.get(0), matrixCollection.get(1));
+		return operands;
 	}
-
 	
 	private Matrix buildMatrix(String line) {
 		int count = -1;
@@ -74,7 +74,7 @@ public class MatrixFileReader {
 			}
 			count++;
 		}
-		if (lines.length != matrix.getNumberOfRows() + 1) {
+		if (lines.length != matrix.getNumberOfRows()) {
 			throw new IllegalArgumentException("Invalid amount Rows");
 		}		
 		return matrix;
@@ -91,7 +91,7 @@ public class MatrixFileReader {
 	
 	
 
-	private static String readLineByLineJava8(String filePath) {
+	private String readLineByLineJava8(String filePath) {
 		StringBuilder contentBuilder = new StringBuilder();
 		try (Stream<String> stream = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)) {
 			stream.forEach(s -> contentBuilder.append(s).append("\n"));
@@ -104,3 +104,4 @@ public class MatrixFileReader {
 	
 
 }
+
