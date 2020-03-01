@@ -59,6 +59,7 @@ public class Main {
 			MatrixFileSaver.saveMatrixResults(outputFile, productMatrix, performanceStats);
 			String fileOutputResults = "The results of the operation were saved at: " + System.lineSeparator()
 					+ outputFile.getAbsolutePath();
+			System.out.println(fileOutputResults);
 
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();

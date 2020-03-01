@@ -34,6 +34,7 @@ public class MatrixFileSaver {
 		String matrixString = MatrixDisplay.buildMatrixConsoleFormat(matrix);
 
 		try (FileWriter matrixWriter = new FileWriter(outputFile)) {
+			matrixWriter.write(programStats + System.lineSeparator());
 			matrixWriter.write(matrixString);
 			matrixWriter.flush();
 		}
