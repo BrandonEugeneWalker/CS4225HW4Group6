@@ -30,8 +30,8 @@ public class Main {
 	 * @param args NOT_USED
 	 */
 	public static void main(String[] args) {
-		File inputFile = new File("TestFiles/test.txt");
-		File outputFile = new File("TestFiles/output.txt");
+		File inputFile = new File(args[0]);
+		File outputFile = new File(args[1]);
 		if (!inputFile.exists() || !inputFile.canRead()) {
 			System.err.println("Invalid Input File..");
 			System.exit(1);
