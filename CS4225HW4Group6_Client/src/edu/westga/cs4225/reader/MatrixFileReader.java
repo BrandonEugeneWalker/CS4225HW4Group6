@@ -65,6 +65,10 @@ public class MatrixFileReader {
 				
 			} else {
 				int[] currMatrix = this.createIntArray(currLine);
+				if (currMatrix.length != matrix.getNumberOfColumns()) {
+					throw new IllegalArgumentException("Invalid amount collumns");
+				}
+				
 				for (int i = 0; i < currMatrix.length; i++) {
 					int value = currMatrix[i];
 					matrix.setMatrixCellValue(count, i, value);
@@ -72,6 +76,10 @@ public class MatrixFileReader {
 			}
 			count++;
 		}
+		if (count > matrix.getNumberOfRows()) {
+			throw new IllegalArgumentException("Invalid amount Rows");
+		}
+		
 		
 		return matrix;
 	}
