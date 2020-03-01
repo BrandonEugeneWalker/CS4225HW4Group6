@@ -22,7 +22,7 @@ public class MatrixFileSaver {
 	 * @param outputFile the file to write to
 	 * @param matrix     the matrix results
 	 * @param programStats the statistics about the operations performance
-	 * @throws IOException
+	 * @throws IOException if an I/O error occurs.
 	 */
 	public static void saveMatrixResults(File outputFile, Matrix matrix, String programStats) throws IOException {
 		if (matrix == null) {

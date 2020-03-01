@@ -17,7 +17,7 @@ public class Main {
 	 * Starting point for the Matrix multiplication. The server
 	 * can be exited with CTRL+C.
 	 * 
-	 * @param args
+	 * @param args the supplied program arguments.
 	 */
 	public static void main(String[] args) {
 		MatrixServer server = new MatrixServer(PORT);

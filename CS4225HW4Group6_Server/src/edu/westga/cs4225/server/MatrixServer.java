@@ -45,8 +45,7 @@ public class MatrixServer {
 	 * @precondition none
 	 * @postcondition the server starts
 	 * 
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 * @throws IOException if an I/O error occurs.
 	 */
 	public void start() throws IOException {
 		this.server = new ServerSocket(this.port);

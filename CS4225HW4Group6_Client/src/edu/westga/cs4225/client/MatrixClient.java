@@ -54,8 +54,8 @@ public class MatrixClient {
 	 * @param operands the matrices to send.
 	 * 
 	 * @return the result of the matrix multiplication
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 * @throws IOException if an I/O error occurs.
+	 * @throws ClassNotFoundException if the incoming data can not be deserialized correctly.
 	 */
 	public Matrix start(Operands operands) throws IOException, ClassNotFoundException {
 		CalculationResult result = null;

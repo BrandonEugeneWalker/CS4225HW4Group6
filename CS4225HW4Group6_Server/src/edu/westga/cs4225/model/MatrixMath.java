@@ -14,9 +14,9 @@ public class MatrixMath {
 	 * 
 	 * @precondition the matrixes cannot be null
 	 * 
-	 * @param matrixA
-	 * @param matrixB
-	 * @return the resulting matrix
+	 * @param matrixA the left matrix operand.
+	 * @param matrixB the right matrix operand.
+	 * @return the resulting matrix product.
 	 */
 	public static Matrix multiply(Matrix matrixA, Matrix matrixB) {
 		if (matrixA == null) {
