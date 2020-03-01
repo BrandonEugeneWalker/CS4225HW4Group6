@@ -49,7 +49,7 @@ public class MatrixFileReader {
 	private Matrix buildMatrix(String line) {
 		int count = -1;
 		Matrix matrix = null;
-		String[] lines = line.split("[\\r\\n]+");
+		String[] lines = line.split("[\\r\\n]+");		
 		for (String currLine : lines) {
 			if (count == -1) {		
 				String[] info = currLine.split(" ");
@@ -61,14 +61,12 @@ public class MatrixFileReader {
 				int size = lines.length - 1;
 				String[] newLines = new String[size];
 				System.arraycopy(lines, 1, newLines, 0, size);
-				lines = newLines;
-				
+				lines = newLines;				
 			} else {
 				int[] currMatrix = this.createIntArray(currLine);
 				if (currMatrix.length != matrix.getNumberOfColumns()) {
 					throw new IllegalArgumentException("Invalid amount collumns");
-				}
-				
+				}	
 				for (int i = 0; i < currMatrix.length; i++) {
 					int value = currMatrix[i];
 					matrix.setMatrixCellValue(count, i, value);
@@ -76,11 +74,9 @@ public class MatrixFileReader {
 			}
 			count++;
 		}
-		if (count > matrix.getNumberOfRows()) {
+		if (lines.length != matrix.getNumberOfRows() + 1) {
 			throw new IllegalArgumentException("Invalid amount Rows");
-		}
-		
-		
+		}		
 		return matrix;
 	}
 	
