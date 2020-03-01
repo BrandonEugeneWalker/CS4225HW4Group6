@@ -36,10 +36,13 @@ public class Main {
 			System.err.println("Invalid Input File..");
 			System.exit(1);
 		}
-		outputFile.createNewFile();
-		
+		try {
+			outputFile.createNewFile();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		MatrixFileReader reader = new MatrixFileReader();
-		Operands operands = reader.ReadFile(inputFile);
+		Operands operands = reader.readFile(inputFile);
 		MatrixClient client = new MatrixClient(HOST, PORT);
 		try {
 			System.out.println("Client Starting...");
