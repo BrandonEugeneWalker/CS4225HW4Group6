@@ -7,7 +7,6 @@ import edu.westga.cs4225.client.MatrixClient;
 import edu.westga.cs4225.model.Matrix;
 import edu.westga.cs4225.model.MatrixDisplay;
 import edu.westga.cs4225.model.Operands;
-import edu.westga.cs4225.model.UserFilePrompt;
 import edu.westga.cs4225.reader.MatrixFileReader;
 import edu.westga.cs4225.reader.MatrixFileSaver;
 
@@ -31,17 +30,14 @@ public class Main {
 	 * @param args NOT_USED
 	 */
 	public static void main(String[] args) {
-		File inputFile, outputFile;
-		try (UserFilePrompt prompt = new UserFilePrompt()) {
-			prompt.promptForInputFile();
-			prompt.promptForOutputFile();
-			inputFile = prompt.getInputFile();
-			outputFile = prompt.getOutputFile();
-		} catch (IllegalArgumentException e) {
-			System.err.println(e.getMessage());
+		File inputFile = new File(args[0]);
+		File outputFile = new File(args[1]);
+		if (!inputFile.exists() || !inputFile.canRead()) {
+			System.err.println("Invalid Input File..");
 			System.exit(1);
 		}
-
+		outputFile.createNewFile();
+		
 		MatrixFileReader reader = new MatrixFileReader();
 		Operands operands = reader.ReadFile(inputFile);
 		MatrixClient client = new MatrixClient(HOST, PORT);
