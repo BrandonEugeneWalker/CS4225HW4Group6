@@ -2,6 +2,7 @@ package edu.westga.cs4225.main;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.ConnectException;
 
 import edu.westga.cs4225.client.MatrixClient;
 import edu.westga.cs4225.model.Matrix;
@@ -32,11 +33,11 @@ public class Main {
 	public static void main(String[] args) {
 		File inputFile = new File(args[0]);
 		File outputFile = new File(args[1]);
-		
+
 		validateInputFile(inputFile);
 		boolean shouldSave = validateOutputFile(outputFile);
 		Operands operands = buildOperands(inputFile);
-		
+
 		MatrixClient client = new MatrixClient(HOST, PORT);
 		try {
 			System.out.println("Client Starting...");
@@ -51,9 +52,12 @@ public class Main {
 			if (shouldSave) {
 				MatrixFileSaver.saveMatrixResults(outputFile, productMatrix, performanceStats);
 				String fileOutputResults = "The results of the operation were saved at: " + System.lineSeparator()
-						+ outputFile.getAbsolutePath();	
+						+ outputFile.getAbsolutePath();
 				System.out.println(fileOutputResults);
 			}
+		} catch (ConnectException ce) {
+			System.err.println("Unable to reach the server. Exiting program...");
+			System.exit(1);
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
@@ -65,7 +69,7 @@ public class Main {
 			System.exit(1);
 		}
 	}
-	
+
 	private static boolean validateOutputFile(File outputFile) {
 		boolean shouldSave = false;
 		try {
@@ -77,7 +81,7 @@ public class Main {
 		}
 		return shouldSave;
 	}
-	
+
 	private static Operands buildOperands(File inputFile) {
 		Operands operands = null;
 		try {
