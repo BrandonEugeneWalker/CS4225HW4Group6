@@ -9,6 +9,7 @@ import edu.westga.cs4225.model.MatrixMath;
 
 /**
  * Tests the functionality of the Matrix class and the MatrixMath class.
+ * 
  * @author Brandon Walker, Kevin Flynn, Luke Whaley
  *
  */
@@ -21,7 +22,7 @@ class TestMatrix {
 		assertEquals(3, testMatrix.getNumberOfColumns());
 		assertEquals(3, testMatrix.getNumberOfRows());
 	}
-	
+
 	@Test
 	void testMatrixGetAndSetCell() {
 		Matrix testMatrix = new Matrix('A', 3, 3);
@@ -32,7 +33,7 @@ class TestMatrix {
 				setCount++;
 			}
 		}
-		
+
 		int getCount = 1;
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
@@ -42,16 +43,11 @@ class TestMatrix {
 			}
 		}
 	}
-	
+
 	/**
-	 * 3 x 3 matrix of values	[1	2	3]
-	 * 							[4	5	6]
-	 * 							[7	8	9]
+	 * 3 x 3 matrix of values [1 2 3] [4 5 6] [7 8 9]
 	 * 
-	 * Multiplied with itself gives the results.
-	 * 							[30	36	42]
-	 * 							[66	81	96]
-	 * 							[102 126 150]
+	 * Multiplied with itself gives the results. [30 36 42] [66 81 96] [102 126 150]
 	 */
 	@Test
 	void testMatrixMathMultiply() {
@@ -63,10 +59,10 @@ class TestMatrix {
 				setCount++;
 			}
 		}
-		
+
 		Matrix matrixC = MatrixMath.multiply(testMatrix, testMatrix);
 		assertEquals('C', matrixC.getMatrixName());
-		
+
 		int result00 = matrixC.getMatrixCellValue(0, 0);
 		int result01 = matrixC.getMatrixCellValue(0, 1);
 		int result02 = matrixC.getMatrixCellValue(0, 2);

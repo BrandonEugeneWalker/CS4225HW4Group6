@@ -1,6 +1,5 @@
 package edu.westga.cs4225.model;
 
-
 /**
  * Handles building strings for displaying/writing a matrix to a file.
  * 

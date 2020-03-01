@@ -5,21 +5,19 @@ import java.io.IOException;
 import java.util.Scanner;
 
 /**
- * This class stores two Files. These files
- * are entered as filepaths by the user through
- * the command prompt. This class reports any errors
- * for invalid files.
+ * This class stores two Files. These files are entered as filepaths by the user
+ * through the command prompt. This class reports any errors for invalid files.
  * 
- * @author Luke Whaley
+ * @author Brandon Walker, Kevin Flynn, Luke Whaley
  *
  */
 public class UserFilePrompt implements AutoCloseable {
-	
+
 	private Scanner prompt;
-	
+
 	private File inputFile;
 	private File outputFile;
-	
+
 	/**
 	 * Creates a new UserFilePrompt object.
 	 * 
@@ -31,17 +29,24 @@ public class UserFilePrompt implements AutoCloseable {
 		this.outputFile = null;
 		this.prompt = new Scanner(System.in);
 	}
-	
+
+	/**
+	 * Closes the user prompt.
+	 * 
+	 * @precondition none
+	 * @postcondition the prompt is closed
+	 */
 	@Override
 	public void close() {
 		this.prompt.close();
 	}
-	
+
 	/**
-	 * Prompts the user to enter a filepath. This filepath will 
-	 * be used to load the data input file.
+	 * Prompts the user to enter a filepath. This filepath will be used to load the
+	 * data input file.
 	 * 
-	 * @precondition (new File({inputfilepath}).exists() && (new File({inputfilepath}).canRead()
+	 * @precondition (new File({inputfilepath}).exists() && (new
+	 *               File({inputfilepath}).canRead()
 	 * @postcondition getInputFile() != null
 	 */
 	public void promptForInputFile() {
@@ -54,10 +59,10 @@ public class UserFilePrompt implements AutoCloseable {
 			throw new IllegalArgumentException("Invalid Input File");
 		}
 	}
-	
+
 	/**
-	 * Prompts the user to enter a filepath. This filepath will 
-	 * be used to load the output file that the data is saved to.
+	 * Prompts the user to enter a filepath. This filepath will be used to load the
+	 * output file that the data is saved to.
 	 * 
 	 * @precondition none
 	 * @postcondition getOutputFile() != null
@@ -73,7 +78,7 @@ public class UserFilePrompt implements AutoCloseable {
 			throw new IllegalArgumentException("Invalid Output File");
 		}
 	}
-	
+
 	/**
 	 * Gets the input file.
 	 * 
@@ -85,7 +90,7 @@ public class UserFilePrompt implements AutoCloseable {
 	public File getInputFile() {
 		return this.inputFile;
 	}
-	
+
 	/**
 	 * Gets the output file.
 	 * 

@@ -3,14 +3,12 @@ package edu.westga.cs4225.model;
 import java.io.Serializable;
 
 /**
- * Represents the two operands used for the matrix multiplication.
- * The order of the matrices is important.
- * 
- * @author Luke Whaley
+ * The operands class stores the two given matrixes in a way that is easily sent over a connection.
+ * @author Brandon Walker, Kevin Flynn, Luke Whaley
  *
  */
 public class Operands implements Serializable {
-
+	
 	private static final long serialVersionUID = 9206457667407986520L;
 	
 	private Matrix leftOperand;

@@ -76,17 +76,6 @@ public class Matrix implements Serializable {
 	}
 
 	/**
-	 * Creates a new instance of a Matrix class
-	 * 
-	 * @precondition matrix does not contains rows of 0 zero length.
-	 */
-	public Matrix(int[][] matrix) {
-		this.matrixValues = matrix;
-		this.numberOfRows = matrix.length;
-		this.numberOfColumns = matrix[0].length;
-	}
-
-	/**
 	 * Sets the value of the m row k column cell.
 	 * 
 	 * @precondition the row/column cannot be negative or greater than the size of

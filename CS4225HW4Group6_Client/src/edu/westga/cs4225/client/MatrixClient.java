@@ -23,6 +23,7 @@ public class MatrixClient {
 
 	private String host;
 	private int port;
+	private String results;
 
 	/**
 	 * Creates a new instance of a MatrixClient.
@@ -42,6 +43,7 @@ public class MatrixClient {
 		this.host = host;
 		this.port = port;
 		this.client = null;
+		this.results = "";
 	}
 
 	/**
@@ -64,15 +66,25 @@ public class MatrixClient {
 			outgoing.writeObject(operands);
 
 			result = (CalculationResult) incoming.readObject();
-			
+
 			System.out.println("Response: ");
 			Duration duration = result.getDuration();
 			double seconds = duration.getNano() / 1.0e9;
-			System.out.println("The matrix multiplication took: " + seconds + "s.");
+			String results = "The matrix multiplication took: " + seconds + "s.";
+			this.results = results;
 		} finally {
 			this.client.close();
 		}
 
 		return result.getMatrix();
+	}
+
+	/**
+	 * Gets and returns the results of the matrix client operations.
+	 * 
+	 * @return a string describing the results.
+	 */
+	public String getResults() {
+		return this.results;
 	}
 }

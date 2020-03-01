@@ -13,16 +13,15 @@ import edu.westga.cs4225.model.MatrixMath;
 import edu.westga.cs4225.model.Operands;
 
 /**
- * Handles the responsibility of responding to 
- * a client request.
+ * Handles the responsibility of responding to a client request.
  * 
- * @author Luke Whaley
+ * @author Brandon Walker, Kevin Flynn, Luke Whaley
  *
  */
 public class Response implements Runnable {
 
 	private Socket client;
-	
+
 	/**
 	 * Creates a new Response object for the specified client.
 	 * 
@@ -35,10 +34,16 @@ public class Response implements Runnable {
 		if (client == null) {
 			throw new IllegalArgumentException("client should not be null.");
 		}
-		
+
 		this.client = client;
 	}
-	
+
+	/**
+	 * Runs the server response.
+	 * 
+	 * @precondition none
+	 * @postcondition the response is running
+	 */
 	@Override
 	public void run() {
 		try (ObjectInputStream incoming = new ObjectInputStream(this.client.getInputStream());
@@ -47,11 +52,11 @@ public class Response implements Runnable {
 
 			Matrix firstMatrix = operands.getLeftOperand();
 			Matrix secondMatrix = operands.getRightOperand();
-					
+
 			Instant start = Instant.now();
 			Matrix matricesProduct = MatrixMath.multiply(firstMatrix, secondMatrix);
 			Instant end = Instant.now();
-					
+
 			CalculationResult result = new CalculationResult(matricesProduct, Duration.between(start, end));
 			outgoing.writeObject(result);
 		} catch (IOException | ClassNotFoundException e) {

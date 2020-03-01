@@ -4,26 +4,26 @@ import java.io.Serializable;
 import java.time.Duration;
 
 /**
- * Data class that stores the information to be sent back to the client
- * when a matrix multiplication has finished.
+ * Data class that stores the information to be sent back to the client when a
+ * matrix multiplication has finished.
  * 
- * @author Luke Whaley
+ * @author Brandon Walker, Kevin Flynn, Luke Whaley
  *
  */
 public class CalculationResult implements Serializable {
-	
+
 	private static final long serialVersionUID = 7204124233605083148L;
 
 	private Matrix matrix;
 	private Duration duration;
-	
+
 	/**
 	 * Creates a new CalculationResult object.
 	 * 
 	 * @precondition matrix != null && duration != null
 	 * @postcondition getMatrix().equals(matrix) && getDuration().equals(duration)
 	 * 
-	 * @param matrix the matrix product.
+	 * @param matrix   the matrix product.
 	 * @param duration the time it took to calculate the matrix product.
 	 */
 	public CalculationResult(Matrix matrix, Duration duration) {
@@ -33,11 +33,11 @@ public class CalculationResult implements Serializable {
 		if (duration == null) {
 			throw new IllegalArgumentException("duration should not be negative.");
 		}
-		
+
 		this.matrix = matrix;
 		this.duration = duration;
 	}
-	
+
 	/**
 	 * Gets the matrix product.
 	 * 
@@ -49,10 +49,9 @@ public class CalculationResult implements Serializable {
 	public Matrix getMatrix() {
 		return this.matrix;
 	}
-	
+
 	/**
-	 * Gets the duration it took for the matrix
-	 * product to be calculated.
+	 * Gets the duration it took for the matrix product to be calculated.
 	 * 
 	 * @precondition none
 	 * @postcondition none
@@ -62,5 +61,5 @@ public class CalculationResult implements Serializable {
 	public Duration getDuration() {
 		return this.duration;
 	}
-	
+
 }

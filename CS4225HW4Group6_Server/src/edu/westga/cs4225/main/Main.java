@@ -4,6 +4,11 @@ import java.io.IOException;
 
 import edu.westga.cs4225.server.MatrixServer;
 
+/**
+ * The entry point of the server.
+ * @author Brandon Walker, Kevin Flynn, Luke Whaley
+ *
+ */
 public class Main {
 
 	private static final int PORT = 4225;

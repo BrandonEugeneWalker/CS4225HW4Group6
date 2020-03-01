@@ -16,10 +16,10 @@ import java.util.concurrent.Executors;
 public class MatrixServer {
 
 	private static final int NUMBER_OF_THREADS = 6;
-	
+
 	private ServerSocket server;
 	private int port;
-	
+
 	private ExecutorService pool;
 
 	/**
@@ -55,7 +55,7 @@ public class MatrixServer {
 			this.pool.execute(new Response(client));
 		}
 	}
-	
+
 	/**
 	 * Closes this MatrixServer.
 	 * 
