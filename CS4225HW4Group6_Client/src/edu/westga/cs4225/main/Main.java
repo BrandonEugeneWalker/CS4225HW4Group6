@@ -32,17 +32,11 @@ public class Main {
 	public static void main(String[] args) {
 		File inputFile = new File(args[0]);
 		File outputFile = new File(args[1]);
-		if (!inputFile.exists() || !inputFile.canRead()) {
-			System.err.println("Invalid Input File..");
-			System.exit(1);
-		}
-		try {
-			outputFile.createNewFile();
-		} catch (IOException e1) {
-			System.err.println("The output file could not be created at: " + outputFile.getAbsolutePath());
-		}
-		Operands operands = null;
-		operands = buildOperand(inputFile, operands);
+		
+		validateInputFile(inputFile);
+		boolean shouldSave = validateOutputFile(outputFile);
+		Operands operands = buildOperands(inputFile);
+		
 		MatrixClient client = new MatrixClient(HOST, PORT);
 		try {
 			System.out.println("Client Starting...");
@@ -54,17 +48,38 @@ public class Main {
 				System.out.println(consoleDisplay);
 			}
 
-			MatrixFileSaver.saveMatrixResults(outputFile, productMatrix, performanceStats);
-			String fileOutputResults = "The results of the operation were saved at: " + System.lineSeparator()
-					+ outputFile.getAbsolutePath();
-			System.out.println(fileOutputResults);
-
+			if (shouldSave) {
+				MatrixFileSaver.saveMatrixResults(outputFile, productMatrix, performanceStats);
+				String fileOutputResults = "The results of the operation were saved at: " + System.lineSeparator()
+						+ outputFile.getAbsolutePath();	
+				System.out.println(fileOutputResults);
+			}
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private static Operands buildOperand(File inputFile, Operands operands) {
+	private static void validateInputFile(File inputFile) {
+		if (!inputFile.exists() || !inputFile.canRead()) {
+			System.err.println("Invalid Input File..");
+			System.exit(1);
+		}
+	}
+	
+	private static boolean validateOutputFile(File outputFile) {
+		boolean shouldSave = false;
+		try {
+			outputFile.createNewFile();
+			shouldSave = true;
+		} catch (IOException e1) {
+			System.err.println("The output file could not be created at: " + outputFile.getAbsolutePath());
+			System.err.println("The results will not be saved.");
+		}
+		return shouldSave;
+	}
+	
+	private static Operands buildOperands(File inputFile) {
+		Operands operands = null;
 		try {
 			MatrixFileReader reader = new MatrixFileReader();
 			operands = reader.readFile(inputFile);
