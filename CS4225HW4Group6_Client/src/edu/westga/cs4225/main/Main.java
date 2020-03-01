@@ -39,7 +39,7 @@ public class Main {
 		try {
 			outputFile.createNewFile();
 		} catch (IOException e1) {
-			e1.printStackTrace();
+			System.err.println("The output file could not be created at: " + outputFile.getAbsolutePath());
 		}
 		MatrixFileReader reader = new MatrixFileReader();
 		Operands operands = reader.readFile(inputFile);
